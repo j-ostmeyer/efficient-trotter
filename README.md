@@ -1,1 +1,35 @@
-# efficient-trotter
+# Efficient Suzuki-Trotter decompositions
+
+An implementation of a large variety of Suzuki-Trotter decomposition schemes (or splitting methods).
+
+This repository contains the scripts and data required to reproduce the results presented in [arXiv:2211.xxxxx [physics]](https://arxiv.org/abs/2211.xxxxx).
+
+For questions concerning the code contact [J.Ostmeyer@liverpool.ac.uk](mailto:J.Ostmeyer@liverpool.ac.uk).
+
+## Derivations
+
+The different schemes' theoretical efficiencies have been calculated in the Mathematica notebook `theo-efficiency.nb`. It also contains the complete code deriving the optimal 4th order decomposition schemes with real and complex coefficients.
+
+Simply follow the examples if you want to calculate the efficiency of your own decomposition scheme.
+
+## Implementation
+
+The different schemes are implemented in `C` with an `R` front-end. The code is located in the `simulation` directory.
+
+The implementation can easily be augmented by another decomposition (see `ising_trotter.c`) and the Hamiltonian can be exchanged (see `ising_hamiltonian.c`) without any need to modify the Trotterizations.
+
+### Compile
+You might have to update the path to your `R/include` library in the `Makefile`. Find the path by executing `Sys.getenv("R_INCLUDE_DIR")` in your R environment.
+
+After adjusting the Makefile according to your needs (possibly switching to another compiler), simply type `make` to compile all the `C` files.
+
+### Run Code
+The only high-level function `noisy_trace` calculates a trace (e.g. needed for the Frobenius norm) and can be executed by running `source("ising_dos.R")` in an `R` environment and then simply calling it.
+
+The data used in the paper can be reproduced with the help of the `benchmark.R` script (e.g. run with `Rscript benchmark.R` in the console). Per default it is compiled without parallelisation and can take about an hour to run.
+
+## Data and Plots
+
+The data produced for the paper is located in `simulation/benchmark`.
+
+The plots in the paper have been produced with `gnuplot`. The corresponding script `plot_tex.gp` can be found in `simulation/benchmark` as well.
