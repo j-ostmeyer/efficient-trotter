@@ -246,6 +246,13 @@ void fr_squared(double complex *x, double complex *y, double *J, double *h, doub
 	forest_ruth(x, y, J, h, t_step*s4, L, N, first_all_x);
 }
 
+void yoshida6a(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, int first_all_x){
+	double complex a[4] = {0.784513610477560E0, 0.235573213359357E0, -0.117767998417887E1, 1-2*(-0.117767998417887E1+0.235573213359357E0+0.784513610477560E0)};
+	double complex b[4] = {0.784513610477560E0*.5, (0.784513610477560E0+0.235573213359357E0)*.5, (0.235573213359357E0-0.117767998417887E1)*.5, .5-(0.784513610477560E0*.5+(0.784513610477560E0+0.235573213359357E0)*.5+(0.235573213359357E0-0.117767998417887E1)*.5)};
+
+	decompose(x, y, J, h, t_step, L, N, 7, a, b, first_all_x);
+}
+
 void blanes6(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, int first_all_x){
 	double complex a[5] = {0.148816447901042, -0.132385865767784, 0.067307604692185, 0.432666402578175, .5-0.148816447901042+0.132385865767784-0.067307604692185-0.432666402578175};
 	double complex b[6] = {0.0502627644003922,  0.413514300428344, 0.0450798897943977, -0.188054853819569, 0.541960678450780, 1-2*(0.0502627644003922+0.413514300428344+0.0450798897943977-0.188054853819569+0.541960678450780)};
@@ -269,6 +276,13 @@ void st6(double complex *x, double complex *y, double *J, double *h, double comp
 	double complex b[13] = {.5*s2*s4, s2*s4, (.5-1.5*s2)*s4, (.5-1.5*s2)*s4, s2*s4, s2*s4, s2*s4, (.5-1.5*s2)*s4, (.5-1.5*s2)*s4, s2*s4, .5*s2*(1-3*s4), s2*(1-4*s4), (.5-1.5*s2)*(1-4*s4)};
 
 	decompose(x, y, J, h, t_step, L, N, 25, a, b, first_all_x);
+}
+
+void morales8_8(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, int first_all_x){
+	double complex a[9] = {0.1278336098628411,0.5614884526635645,-0.3840057330149140,0.1598276220860992,-0.4004911042818011,0.1866964814954069,0.2602039423490415,0.2913738476798666,-0.6058542376802095};
+	double complex b[9] = {0.1278336098628411*.5, 0.3446610312632028,0.08874135982432523,-0.1120890554644074,-0.1203317410978509,-0.1068973113931971,0.2234502119222242,0.2757888950144541, -0.1572401950001714};
+
+	decompose(x, y, J, h, t_step, L, N, 17, a, b, first_all_x);
 }
 
 void fr_cubed(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, int first_all_x){

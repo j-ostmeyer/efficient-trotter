@@ -66,6 +66,9 @@ void trotter_time_step(double complex *x, double complex *y, double *J, double *
 		case 471: // technically this one is only order 4 (it's order 6 when some of the commutators vanish)
 			order6(x, y, J, h, t_step, L, N, first_all_x);
 			break;
+		case 671:
+			yoshida6a(x, y, J, h, t_step, L, N, first_all_x);
+			break;
 		case 691:
 			fr_squared(x, y, J, h, t_step, L, N, first_all_x);
 			break;
@@ -77,6 +80,9 @@ void trotter_time_step(double complex *x, double complex *y, double *J, double *
 			break;
 		case 6251:
 			st6(x, y, J, h, t_step, L, N, first_all_x);
+			break;
+		case 8171:
+			morales8_8(x, y, J, h, t_step, L, N, first_all_x);
 			break;
 		case 8271:
 			fr_cubed(x, y, J, h, t_step, L, N, first_all_x);

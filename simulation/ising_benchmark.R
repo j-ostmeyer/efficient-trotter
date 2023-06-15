@@ -3,9 +3,9 @@ source("ising_dos.R")
 L = 6
 h = runif(L)*.2 - .1
 
-schemes = c("211", "221", "431", "441", "442", "443", "451", "452", "453", "454", "455", "456", "457", "458", "461", "471", "691", "6101", "6151", "6251", "8271", "8451", "8501", "81251", "0171")
-cycles = c(1, 2, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 9, 10, 15, 25, 27, 45, 50, 125, 3)
-scheme.names = c("Leap-Frog", "Omelyan2", "Forest-Ruth", "FR-Type", "small-B", "Non-Unitary1", "Suzuki4", "Algorithm-30", "Optimal-4th-order", "Non-Unitary2", "Omelyan-ST-4", "Non-Unitary3", "Non-Unitary Blanes", "Uniform non-unit", "Blanes-4", "Symplectic-6", "FR-Squared", "Blanes-6", "FR-Suzuki6", "Suzuk",    "i6", "FR-Cubed", "FR-Suzuki8", "Blanes6-Suzuki8", "Suzuki8", "Taylor")
+schemes = c("211", "221", "431", "441", "442", "443", "451", "452", "453", "454", "455", "456", "457", "458", "461", "471", "691", "6101", "6151", "6251", "671", "8171", "8501", "81251", "0171")
+cycles = c(1, 2, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 9, 10, 15, 25, 7, 17, 50, 125, 3)
+scheme.names = c("Leap-Frog", "Omelyan2", "Forest-Ruth", "FR-Type", "small-B", "Non-Unitary1", "Suzuki4", "Algorithm-30", "Optimal-4th-order", "Non-Unitary2", "Omelyan-ST-4", "Non-Unitary3", "Non-Unitary Blanes", "Uniform non-unit", "Blanes-4", "Symplectic-6", "FR-Squared", "Blanes-6", "FR-Suzuki6", "Suzuk",    "i6", "Yoshida", "Morales", "Blanes6-Suzuki8", "Suzuki8", "Taylor")
 
 #dummy = sapply(c(1:7, 9,10, 13, 16), function(s){
 #				   cat(paste0("\\subsubsection{", scheme.names[s], "}\n"))

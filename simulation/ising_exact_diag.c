@@ -60,6 +60,6 @@ void diagonalise_heisenberg(double *ev, double *hamilton, double *J, double *h, 
 
 void exact_time_evol(double complex *x, double complex *y, double *ev, double *hamilton, double complex t, unsigned long N){
 	mat_mul(hamilton, x, y, N);
-	for(unsigned i = 0; i < N; i++) y[i] *= cexp(-t * ev[i]);
+	for(unsigned i = 0; i < N; i++) y[i] *= cexp(conj(t) * ev[i]);
 	mat_mul_tr(hamilton, y, x, N);
 }
