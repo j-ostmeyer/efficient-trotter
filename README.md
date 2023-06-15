@@ -2,7 +2,7 @@
 
 An implementation of a large variety of Suzuki-Trotter decomposition schemes (or splitting methods).
 
-This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691).
+This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691), J. Phys. A: Math. Theor., DOI: [10.1088/1751-8121/acde7a](https://doi.org/10.1088/1751-8121/acde7a).
 
 For questions concerning the code contact [J.Ostmeyer@liverpool.ac.uk](mailto:J.Ostmeyer@liverpool.ac.uk).
 
@@ -33,3 +33,9 @@ The data used in the paper can be reproduced with the help of the `benchmark.R` 
 The data produced for the paper is located in `simulation/benchmark`.
 
 The plots in the paper have been produced with `gnuplot`. The corresponding script `plot_tex.gp` can be found in `simulation/benchmark` as well.
+
+## Stable Releases
+
+`v1.0.0` initial publication with the preprint, compatible with arXiv versions v1, v2, v3.
+
+`v1.1.0` added implementations of Yoshida's and Morales's methods, compatible with journal article and arXiv version v4.
