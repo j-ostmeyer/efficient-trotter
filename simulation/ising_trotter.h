@@ -49,5 +49,23 @@ void blanes6_st8(double complex *x, double complex *y, double *J, double *h, dou
 
 void st8(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, int first_all_x);
 
+void taylor_sum(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, unsigned cutoff);
+
+void taylor4(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
 void taylor17(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+void taylor52(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+void taylor88(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+void taylor304(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+
+void zero_expansion(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double complex *a, unsigned n_zeros);
+
+void taylor52_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+void taylor88_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+void taylor304_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+
+void chebyshev152_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
+
+void chebychev_expansion(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double *a, unsigned cutoff);
+
+void chebyshev152(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N);
 #endif

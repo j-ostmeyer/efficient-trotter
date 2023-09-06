@@ -323,12 +323,12 @@ void st8(double complex *x, double complex *y, double *J, double *h, double comp
 	st6(x, y, J, h, t_step*s6, L, N, first_all_x);
 }
 
-void taylor17(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+void taylor_sum(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, unsigned cutoff){
 	double complex *z = y + N;
 
 	memcpy(y, x, N * sizeof(double complex));
 
-	for(unsigned i = 1; i <= 17; i++){
+	for(unsigned i = 1; i <= cutoff; i++){
 		const double complex norm = conj(t_step) / i;
 
 		apply_hamiltonian(y, z, J, h, L, N);
@@ -343,4 +343,142 @@ void taylor17(double complex *x, double complex *y, double *J, double *h, double
 		y = z;
 		z = dummy;
 	}
+}
+
+void taylor4(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	taylor_sum(x, y, J, h, t_step, L, N, 4);
+}
+
+void taylor17(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	taylor_sum(x, y, J, h, t_step, L, N, 17);
+}
+
+void taylor52(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	taylor_sum(x, y, J, h, t_step, L, N, 52);
+}
+
+void taylor88(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	taylor_sum(x, y, J, h, t_step, L, N, 88);
+}
+
+void taylor304(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	taylor_sum(x, y, J, h, t_step, L, N, 304);
+}
+
+void tuple_linear(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double complex *a, unsigned n_zeros, unsigned tuple){
+	for(unsigned j = 0; j < 4; j++){
+		const unsigned pos = j < 2? 2*tuple+j : n_zeros-1-(2*tuple+j%2);
+		const double complex norm = a[pos] * conj(t_step) / n_zeros;
+
+		apply_hamiltonian(x, y, J, h, L, N);
+
+#pragma omp parallel for
+		for(unsigned long k = 0; k < N; k++){
+			x[k] += norm*y[k];
+		}
+	}
+}
+
+void tuple_quadratic(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double complex *a, unsigned n_zeros, unsigned tuple){
+	double complex *z = y + N;
+
+	for(unsigned j = 0; j < 4; j+=2){
+		const unsigned pos = j < 2? 2*tuple+j : n_zeros-1-(2*tuple+j%2);
+		const double complex norm = conj(t_step) / n_zeros;
+		const double complex a_lin = 2*creal(a[pos]) * norm, a_quad = pow(cabs(a[pos]), 2) * norm*norm;
+
+		apply_hamiltonian(x, y, J, h, L, N);
+		apply_hamiltonian(y, z, J, h, L, N);
+
+#pragma omp parallel for
+		for(unsigned long k = 0; k < N; k++){
+			x[k] += a_lin * y[k] + a_quad * z[k];
+		}
+	}
+}
+
+void zero_expansion(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double complex *a, unsigned n_zeros){
+	const unsigned n_tuples = n_zeros/4;
+	unsigned tuple;
+
+	for(unsigned i = 0, down = 0, up = n_tuples-1; i < n_tuples; i++){
+		// group coefficients into 4-tuples with real total stride close to 4
+		// sort them so that the overall stride matches the actual position
+		if(i % 3 == 1){
+			tuple = down;
+			down++;
+		}else{
+			tuple = up;
+			up--;
+		}
+
+		//tuple_linear(x, y, J, h, t_step, L, N, a, n_zeros, tuple);
+		tuple_quadratic(x, y, J, h, t_step, L, N, a, n_zeros, tuple);
+	}
+}
+
+void taylor52_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+#include "taylor52_coeffs.h" // coefficients: double complex a[52] = {...};
+
+	zero_expansion(x, y, J, h, t_step, L, N, a, 52);
+}
+
+void taylor88_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+#include "taylor88_coeffs.h" // coefficients: double complex a[88] = {...};
+
+	zero_expansion(x, y, J, h, t_step, L, N, a, 88);
+}
+
+void taylor304_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+#include "taylor304_coeffs.h" // coefficients: double complex a[304] = {...};
+
+	zero_expansion(x, y, J, h, t_step, L, N, a, 304);
+}
+
+void chebyshev152_prod(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	// only good for real time evolution!
+#include "chebyshev152_coeffs.h" // coefficients: double complex a[152] = {...};
+
+	zero_expansion(x, y, J, h, t_step, L, N, a, 152);
+}
+
+void chebychev_expansion(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N, double *a, unsigned cutoff){
+	double complex *yn = y;
+	double complex *yn1 = y + N;
+	double complex *z = y + 2*N;
+
+	double complex fac = -2*I, coeff = fac*a[1];
+	const double complex norm = 0.01*I*conj(t_step);
+
+	apply_hamiltonian(x, yn, J, h, L, N);
+
+	for(unsigned long k = 0; k < N; k++){
+		yn1[k] = x[k];
+		yn[k] *= norm;
+		x[k] = a[0]*x[k] + coeff*yn[k];
+	}
+
+	for(unsigned i = 2; i <= cutoff; i++){
+		fac *= -I;
+		coeff = fac*a[i];
+
+		apply_hamiltonian(yn, z, J, h, L, N);
+
+#pragma omp parallel for
+		for(unsigned long k = 0; k < N; k++){
+			yn1[k] = 2*norm*z[k] - yn1[k];
+			x[k] += coeff*yn1[k];
+		}
+
+		double complex *dummy = yn;
+		yn = yn1;
+		yn1 = dummy;
+	}
+}
+
+void chebyshev152(double complex *x, double complex *y, double *J, double *h, double complex t_step, unsigned L, unsigned long N){
+	// only good for real time evolution!
+#include "chebyshev152_bessel.h" // coefficients: double a[153] = {...};
+
+	chebychev_expansion(x, y, J, h, t_step, L, N, a, 152);
 }
