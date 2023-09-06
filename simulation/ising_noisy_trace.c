@@ -93,11 +93,41 @@ void trotter_time_step(double complex *x, double complex *y, double *J, double *
 		case 8501:
 			blanes6_st8(x, y, J, h, t_step, L, N, first_all_x);
 			break;
+		case 8502:
+			blanes6_yoshi8(x, y, J, h, t_step, L, N, first_all_x);
+			break;
 		case 81251:
 			st8(x, y, J, h, t_step, L, N, first_all_x);
 			break;
+		case 41: // not polynomial (order 0)!
+			taylor4(x, y, J, h, t_step, L, N);
+			break;
 		case 171: // not polynomial (order 0)!
 			taylor17(x, y, J, h, t_step, L, N);
+			break;
+		case 521: // not polynomial (order 0)!
+			taylor52(x, y, J, h, t_step, L, N);
+			break;
+		case 522: // not polynomial (order 0)!
+			taylor52_prod(x, y, J, h, t_step, L, N);
+			break;
+		case 881: // not polynomial (order 0)!
+			taylor88(x, y, J, h, t_step, L, N);
+			break;
+		case 882: // not polynomial (order 0)!
+			taylor88_prod(x, y, J, h, t_step, L, N);
+			break;
+		case 3041: // not polynomial (order 0)!
+			taylor304(x, y, J, h, t_step, L, N);
+			break;
+		case 3042: // not polynomial (order 0)!
+			taylor304_prod(x, y, J, h, t_step, L, N);
+			break;
+		case 1521: // not polynomial (order 0)!
+			chebyshev152(x, y, J, h, t_step, L, N);
+			break;
+		case 1522: // not polynomial (order 0)!
+			chebyshev152_prod(x, y, J, h, t_step, L, N);
 			break;
 		default:
 			printf("Decomposition scheme %d not supported!\n", scheme);
@@ -221,7 +251,11 @@ double complex *trace_estimator(double *J, double *h, double complex t, unsigned
 	if(operator_id<0) diagonalise_heisenberg(ev, hamilton, J, h, L, N);
 #endif
 
-	if(scheme == 171) y = realloc(y, 2*N * sizeof(double complex));
+	//if(scheme == 41 || scheme == 171 || scheme == 521 || scheme == 881 || scheme == 3041)
+		y = realloc(y, 2*N * sizeof(double complex));
+
+	if(scheme == 1521)
+		y = realloc(y, 3*N * sizeof(double complex));
 
 	init_genrand64(time(NULL)+seed);
 
