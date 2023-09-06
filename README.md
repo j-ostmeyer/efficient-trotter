@@ -2,7 +2,7 @@
 
 An implementation of a large variety of Suzuki-Trotter decomposition schemes (or splitting methods).
 
-This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691), J. Phys. A: Math. Theor., DOI: [10.1088/1751-8121/acde7a](https://doi.org/10.1088/1751-8121/acde7a).
+This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691), J. Phys. A: Math. Theor., DOI: [10.1088/1751-8121/acde7a](https://doi.org/10.1088/1751-8121/acde7a) as well as *"Simple Ways to improve Discrete Time Evolution"*, [arXiv:2309.xxxx [quant-ph]](https://arxiv.org/abs/2309.xxxxx), LATTICE 2023 proceedings..
 
 For questions concerning the code contact [J.Ostmeyer@liverpool.ac.uk](mailto:J.Ostmeyer@liverpool.ac.uk).
 
@@ -11,6 +11,8 @@ For questions concerning the code contact [J.Ostmeyer@liverpool.ac.uk](mailto:J.
 The different schemes' theoretical efficiencies have been calculated in the Mathematica notebook `theo-efficiency.nb`. It also contains the complete code deriving the optimal 4th order decomposition schemes with real and complex coefficients.
 
 Simply follow the examples if you want to calculate the efficiency of your own decomposition scheme.
+
+The coefficients required for a factorised implementation of Taylor and Chebyshev series are calculated in `taylor_coefficients.nb`.
 
 ## Implementation
 
@@ -39,3 +41,5 @@ The plots in the paper have been produced with `gnuplot`. The corresponding scri
 `v1.0.0` initial publication with the preprint, compatible with arXiv versions v1, v2, v3.
 
 `v1.1.0` added implementations of Yoshida's and Morales's methods, compatible with journal article and arXiv version v4.
+
+`v1.2.0` added factorised polynomial implementations, compatible with LATTICE 2023 proceedings.
