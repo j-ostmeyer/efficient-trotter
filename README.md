@@ -2,7 +2,7 @@
 
 An implementation of a large variety of Suzuki-Trotter decomposition schemes (or splitting methods).
 
-This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691), J. Phys. A: Math. Theor., DOI: [10.1088/1751-8121/acde7a](https://doi.org/10.1088/1751-8121/acde7a) as well as *"Simple Ways to improve Discrete Time Evolution"*, [arXiv:2309.xxxx [quant-ph]](https://arxiv.org/abs/2309.xxxxx), LATTICE 2023 proceedings..
+This repository contains the scripts and data required to reproduce the results presented in *"Optimised Trotter Decompositions for Classical and Quantum Computing"*, [arXiv:2211.02691 [quant-ph]](https://arxiv.org/abs/2211.02691), J. Phys. A: Math. Theor., DOI: [10.1088/1751-8121/acde7a](https://doi.org/10.1088/1751-8121/acde7a) as well as *"Simple Ways to improve Discrete Time Evolution"*, [arXiv:2309.xxxx [quant-ph]](https://arxiv.org/abs/2309.xxxxx), LATTICE 2023 proceedings.
 
 For questions concerning the code contact [J.Ostmeyer@liverpool.ac.uk](mailto:J.Ostmeyer@liverpool.ac.uk).
 
